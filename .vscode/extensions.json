@@ -1,0 +1,16 @@
+{
+  "//": "Extensions conseillees pour ce monorepo. Un seul serveur de langage Java (Red Hat) : en installer plusieurs fait apparaitre des erreurs fantomes.",
+  "recommendations": [
+    "vscjava.vscode-java-pack",
+    "vmware.vscode-spring-boot",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss",
+    "dart-code.flutter",
+    "ms-azuretools.vscode-docker"
+  ],
+  "unwantedRecommendations": [
+    "oracle.oracle-java",
+    "georgewfraser.vscode-javac"
+  ]
+}
