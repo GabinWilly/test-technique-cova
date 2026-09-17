@@ -164,10 +164,19 @@ casse facilement sans s'en apercevoir :
 
 ## Captures
 
-**Liste des tâches**
+### Web
 
 ![Liste des tâches](docs/web-tasks-fr.png)
 
 | Confirmation de suppression | Validation du formulaire |
 |---|---|
 | ![Confirmation](docs/web-confirm-delete.png) | ![Validation](docs/web-register-validation.png) |
+
+### Mobile
+
+| Connexion | Liste (FR) | Liste (EN) | Suppression |
+|---|---|---|---|
+| ![Connexion](docs/mobile-login.png) | ![Liste FR](docs/mobile-tasks.png) | ![Liste EN](docs/mobile-tasks-en.png) | ![Suppression](docs/mobile-confirm-delete.png) |
+
+Les deux applications lisent la même base : les tâches visibles sur mobile sont
+celles créées depuis le web, et inversement.

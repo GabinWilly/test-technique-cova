@@ -17,7 +17,7 @@
 
   "warningTitle": "Attention",
   "errorTitle": "Erreur",
-  "confirmDeleteText": "Supprimer « {title} » ? Cette action est définitive.",
+  "confirmDeleteText": "Supprimer « {title} » ? Cette action est définitive.",
   "@confirmDeleteText": {
     "description": "Question de confirmation, citant le titre de la tâche",
     "placeholders": {
@@ -38,8 +38,8 @@
   "registerSubtitle": "Une minute suffit.",
   "submitLogin": "Se connecter",
   "submitRegister": "Créer mon compte",
-  "noAccount": "Pas encore de compte ?",
-  "haveAccount": "Vous avez déjà un compte ?",
+  "noAccount": "Pas encore de compte ?",
+  "haveAccount": "Vous avez déjà un compte ?",
 
   "myTasks": "Mes tâches",
   "newTask": "Nouvelle tâche",
@@ -48,7 +48,7 @@
   "taskDescription": "Description",
   "taskStatus": "Statut",
   "searchHint": "Rechercher…",
-  "titleHint": "Que faut-il faire ?",
+  "titleHint": "Que faut-il faire ?",
   "descriptionHint": "Optionnelle",
 
   "filterAll": "Toutes",

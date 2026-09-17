@@ -16,7 +16,7 @@
     "warningTitle": "Attention",
     "errorTitle": "Erreur",
     "confirmDeleteTitle": "Attention",
-    "confirmDeleteText": "Supprimer « {{title}} » ? Cette action est définitive."
+    "confirmDeleteText": "Supprimer « {{title}} » ? Cette action est définitive."
   },
   "auth": {
     "login": "Connexion",
@@ -30,8 +30,8 @@
     "registerSubtitle": "Une minute suffit.",
     "submitLogin": "Se connecter",
     "submitRegister": "Créer mon compte",
-    "noAccount": "Pas encore de compte ?",
-    "haveAccount": "Vous avez déjà un compte ?",
+    "noAccount": "Pas encore de compte ?",
+    "haveAccount": "Vous avez déjà un compte ?",
     "emailPlaceholder": "vous@exemple.com",
     "namePlaceholder": "Votre nom"
   },
@@ -45,7 +45,7 @@
     "newTask": "Nouvelle tâche",
     "editTask": "Modifier la tâche",
     "searchPlaceholder": "Rechercher une tâche…",
-    "titlePlaceholder": "Que faut-il faire ?",
+    "titlePlaceholder": "Que faut-il faire ?",
     "descriptionPlaceholder": "Optionnelle",
     "emptyTitle": "Aucune tâche pour le moment.",
     "emptyHint": "Créez la première, elle apparaîtra ici et sur votre mobile.",
