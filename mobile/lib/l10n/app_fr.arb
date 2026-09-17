@@ -1,0 +1,93 @@
+{
+  "@@locale": "fr",
+
+  "appName": "Task Manager",
+  "@appName": {
+    "description": "Nom de l'application"
+  },
+
+  "loading": "Chargement…",
+  "save": "Enregistrer",
+  "cancel": "Annuler",
+  "delete": "Supprimer",
+  "edit": "Modifier",
+  "gotIt": "J'ai compris",
+  "language": "Langue",
+  "retry": "Réessayer",
+
+  "warningTitle": "Attention",
+  "errorTitle": "Erreur",
+  "confirmDeleteText": "Supprimer « {title} » ? Cette action est définitive.",
+  "@confirmDeleteText": {
+    "description": "Question de confirmation, citant le titre de la tâche",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+
+  "login": "Connexion",
+  "register": "Inscription",
+  "logout": "Déconnexion",
+  "email": "Adresse e-mail",
+  "password": "Mot de passe",
+  "name": "Nom",
+  "loginSubtitle": "Vos tâches, partout.",
+  "registerTitle": "Créer un compte",
+  "registerSubtitle": "Une minute suffit.",
+  "submitLogin": "Se connecter",
+  "submitRegister": "Créer mon compte",
+  "noAccount": "Pas encore de compte ?",
+  "haveAccount": "Vous avez déjà un compte ?",
+
+  "myTasks": "Mes tâches",
+  "newTask": "Nouvelle tâche",
+  "editTask": "Modifier la tâche",
+  "taskTitle": "Titre",
+  "taskDescription": "Description",
+  "taskStatus": "Statut",
+  "searchHint": "Rechercher…",
+  "titleHint": "Que faut-il faire ?",
+  "descriptionHint": "Optionnelle",
+
+  "filterAll": "Toutes",
+  "statusTodo": "À faire",
+  "statusInProgress": "En cours",
+  "statusDone": "Terminée",
+
+  "emptyTitle": "Aucune tâche pour le moment.",
+  "emptyHint": "Créez la première, elle apparaîtra ici et sur le web.",
+  "noResultsTitle": "Aucune tâche ne correspond.",
+  "noResultsHint": "Essayez un autre mot-clé ou un autre statut.",
+  "clearFilters": "Effacer les filtres",
+
+  "updatedOn": "Modifiée le {date}",
+  "@updatedOn": {
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMd",
+        "isCustomDateFormat": "false"
+      }
+    }
+  },
+
+  "taskCount": "{count, plural, =0{Aucune tâche} =1{1 tâche} other{{count} tâches}}",
+  "@taskCount": {
+    "description": "Nombre total de tâches, avec gestion du pluriel",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "errorNetwork": "Impossible de joindre le serveur.",
+  "errorUnexpected": "Une erreur inattendue est survenue.",
+  "errorUnauthorized": "Session expirée, merci de vous reconnecter.",
+
+  "successCreated": "Tâche créée.",
+  "successUpdated": "Tâche mise à jour.",
+  "successDeleted": "Tâche supprimée."
+}

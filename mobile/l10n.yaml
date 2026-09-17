@@ -1,0 +1,9 @@
+# Configuration de gen-l10n : genere lib/l10n/app_localizations.dart a partir
+# des fichiers ARB. La generation est declenchee par `flutter gen-l10n`, et
+# automatiquement par `flutter run` / `flutter build` grace a `generate: true`
+# dans pubspec.yaml.
+arb-dir: lib/l10n
+template-arb-file: app_fr.arb
+output-localization-file: app_localizations.dart
+output-class: AppLocalizations
+nullable-getter: false

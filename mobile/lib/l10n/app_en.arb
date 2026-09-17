@@ -1,0 +1,87 @@
+{
+  "@@locale": "en",
+
+  "appName": "Task Manager",
+  "loading": "Loading…",
+  "save": "Save",
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "edit": "Edit",
+  "gotIt": "Got it",
+  "language": "Language",
+  "retry": "Try again",
+
+  "warningTitle": "Heads up",
+  "errorTitle": "Error",
+  "confirmDeleteText": "Delete “{title}”? This cannot be undone.",
+  "@confirmDeleteText": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+
+  "login": "Sign in",
+  "register": "Sign up",
+  "logout": "Sign out",
+  "email": "Email address",
+  "password": "Password",
+  "name": "Name",
+  "loginSubtitle": "Your tasks, everywhere.",
+  "registerTitle": "Create an account",
+  "registerSubtitle": "It takes a minute.",
+  "submitLogin": "Sign in",
+  "submitRegister": "Create my account",
+  "noAccount": "No account yet?",
+  "haveAccount": "Already have an account?",
+
+  "myTasks": "My tasks",
+  "newTask": "New task",
+  "editTask": "Edit task",
+  "taskTitle": "Title",
+  "taskDescription": "Description",
+  "taskStatus": "Status",
+  "searchHint": "Search…",
+  "titleHint": "What needs doing?",
+  "descriptionHint": "Optional",
+
+  "filterAll": "All",
+  "statusTodo": "To do",
+  "statusInProgress": "In progress",
+  "statusDone": "Done",
+
+  "emptyTitle": "No tasks yet.",
+  "emptyHint": "Create the first one — it will appear here and on the web.",
+  "noResultsTitle": "No task matches.",
+  "noResultsHint": "Try another keyword or another status.",
+  "clearFilters": "Clear filters",
+
+  "updatedOn": "Updated on {date}",
+  "@updatedOn": {
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMd",
+        "isCustomDateFormat": "false"
+      }
+    }
+  },
+
+  "taskCount": "{count, plural, =0{No tasks} =1{1 task} other{{count} tasks}}",
+  "@taskCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "errorNetwork": "Unable to reach the server.",
+  "errorUnexpected": "An unexpected error occurred.",
+  "errorUnauthorized": "Session expired, please sign in again.",
+
+  "successCreated": "Task created.",
+  "successUpdated": "Task updated.",
+  "successDeleted": "Task deleted."
+}
