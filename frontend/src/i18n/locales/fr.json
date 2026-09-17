@@ -1,0 +1,78 @@
+{
+  "common": {
+    "appName": "Task Manager",
+    "loading": "Chargement…",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "close": "Fermer",
+    "search": "Rechercher",
+    "language": "Langue",
+    "gotIt": "J'ai compris",
+    "retry": "Réessayer"
+  },
+  "alerts": {
+    "warningTitle": "Attention",
+    "errorTitle": "Erreur",
+    "confirmDeleteTitle": "Attention",
+    "confirmDeleteText": "Supprimer « {{title}} » ? Cette action est définitive."
+  },
+  "auth": {
+    "login": "Connexion",
+    "register": "Inscription",
+    "logout": "Déconnexion",
+    "email": "Adresse e-mail",
+    "password": "Mot de passe",
+    "name": "Nom",
+    "loginSubtitle": "Connectez-vous pour retrouver vos tâches.",
+    "registerTitle": "Créer un compte",
+    "registerSubtitle": "Une minute suffit.",
+    "submitLogin": "Se connecter",
+    "submitRegister": "Créer mon compte",
+    "noAccount": "Pas encore de compte ?",
+    "haveAccount": "Vous avez déjà un compte ?",
+    "emailPlaceholder": "vous@exemple.com",
+    "namePlaceholder": "Votre nom"
+  },
+  "task": {
+    "title": "Titre",
+    "description": "Description",
+    "status": "Statut",
+    "createdAt": "Créée le {{date}}",
+    "updatedAt": "Modifiée le {{date}}",
+    "myTasks": "Mes tâches",
+    "newTask": "Nouvelle tâche",
+    "editTask": "Modifier la tâche",
+    "searchPlaceholder": "Rechercher une tâche…",
+    "titlePlaceholder": "Que faut-il faire ?",
+    "descriptionPlaceholder": "Optionnelle",
+    "emptyTitle": "Aucune tâche pour le moment.",
+    "emptyHint": "Créez la première, elle apparaîtra ici et sur votre mobile.",
+    "noResultsTitle": "Aucune tâche ne correspond.",
+    "noResultsHint": "Essayez un autre mot-clé ou un autre statut.",
+    "clearFilters": "Effacer les filtres",
+    "statuses": {
+      "TODO": "À faire",
+      "IN_PROGRESS": "En cours",
+      "DONE": "Terminée"
+    },
+    "filter": {
+      "all": "Toutes"
+    },
+    "count_zero": "Aucune tâche",
+    "count_one": "{{count}} tâche",
+    "count_other": "{{count}} tâches"
+  },
+  "errors": {
+    "network": "Impossible de joindre le serveur.",
+    "unauthorized": "Session expirée, merci de vous reconnecter.",
+    "unexpected": "Une erreur inattendue est survenue."
+  },
+  "success": {
+    "taskCreated": "Tâche créée.",
+    "taskUpdated": "Tâche mise à jour.",
+    "taskDeleted": "Tâche supprimée.",
+    "welcome": "Bienvenue, {{name}}."
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "common": {
+    "appName": "Task Manager",
+    "loading": "Loading…",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "search": "Search",
+    "language": "Language",
+    "gotIt": "Got it",
+    "retry": "Try again"
+  },
+  "alerts": {
+    "warningTitle": "Heads up",
+    "errorTitle": "Error",
+    "confirmDeleteTitle": "Heads up",
+    "confirmDeleteText": "Delete “{{title}}”? This cannot be undone."
+  },
+  "auth": {
+    "login": "Sign in",
+    "register": "Sign up",
+    "logout": "Sign out",
+    "email": "Email address",
+    "password": "Password",
+    "name": "Name",
+    "loginSubtitle": "Sign in to pick up your tasks.",
+    "registerTitle": "Create an account",
+    "registerSubtitle": "It takes a minute.",
+    "submitLogin": "Sign in",
+    "submitRegister": "Create my account",
+    "noAccount": "No account yet?",
+    "haveAccount": "Already have an account?",
+    "emailPlaceholder": "you@example.com",
+    "namePlaceholder": "Your name"
+  },
+  "task": {
+    "title": "Title",
+    "description": "Description",
+    "status": "Status",
+    "createdAt": "Created on {{date}}",
+    "updatedAt": "Updated on {{date}}",
+    "myTasks": "My tasks",
+    "newTask": "New task",
+    "editTask": "Edit task",
+    "searchPlaceholder": "Search a task…",
+    "titlePlaceholder": "What needs doing?",
+    "descriptionPlaceholder": "Optional",
+    "emptyTitle": "No tasks yet.",
+    "emptyHint": "Create the first one — it will appear here and on your phone.",
+    "noResultsTitle": "No task matches.",
+    "noResultsHint": "Try another keyword or another status.",
+    "clearFilters": "Clear filters",
+    "statuses": {
+      "TODO": "To do",
+      "IN_PROGRESS": "In progress",
+      "DONE": "Done"
+    },
+    "filter": {
+      "all": "All"
+    },
+    "count_zero": "No tasks",
+    "count_one": "{{count}} task",
+    "count_other": "{{count}} tasks"
+  },
+  "errors": {
+    "network": "Unable to reach the server.",
+    "unauthorized": "Session expired, please sign in again.",
+    "unexpected": "An unexpected error occurred."
+  },
+  "success": {
+    "taskCreated": "Task created.",
+    "taskUpdated": "Task updated.",
+    "taskDeleted": "Task deleted.",
+    "welcome": "Welcome, {{name}}."
+  }
+}
