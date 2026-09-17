@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    # MODE=MySQL rapproche H2 du comportement de production (mots reserves,
+    # comparaisons de chaines). Le schema vient des memes entites JPA.
+    url: jdbc:h2:mem:taskmanager;MODE=MySQL;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+
+app:
+  jwt:
+    # 256 bits en base64, valeur de test uniquement
+    secret: dGVzdC1zZWNyZXQtdGVzdC1zZWNyZXQtdGVzdC1zZWNyZXQtdGVzdC0xMjM0NTY=
+    expiration-ms: 3600000
+  cors:
+    allowed-origins: http://localhost:5174
+
+logging:
+  level:
+    org.hibernate.SQL: WARN
