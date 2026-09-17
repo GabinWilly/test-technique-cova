@@ -82,9 +82,15 @@ public class SecurityConfig {
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
+        // Les entrees vides sont ecartees : une variable d'environnement non
+        // renseignee produirait sinon une origine "" que Spring refuse.
+        List<String> origins = Arrays.stream(allowedOrigins.split(","))
+                .map(String::trim)
+                .filter(origin -> !origin.isEmpty())
+                .toList();
+
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(
-                Arrays.stream(allowedOrigins.split(",")).map(String::trim).toList());
+        configuration.setAllowedOrigins(origins);
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept-Language"));
         configuration.setMaxAge(3600L);

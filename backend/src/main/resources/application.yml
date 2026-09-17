@@ -9,7 +9,9 @@ spring:
     fallback-to-system-locale: false
 
   datasource:
-    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3307}/${DB_NAME:taskmanager}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=UTF-8
+    # DATABASE_URL permet de fournir une URL complete, par exemple pour passer
+    # par le socket Cloud SQL, sans avoir a reconstruire l'URL piece par piece.
+    url: ${DATABASE_URL:jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3307}/${DB_NAME:taskmanager}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=UTF-8}
     username: ${DB_USER:taskuser}
     password: ${DB_PASSWORD:changeme}
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -24,8 +26,9 @@ spring:
     show-sql: false
 
 server:
-  # 8080 est deja occupe sur la machine de dev
-  port: ${SERVER_PORT:8081}
+  # Cloud Run impose le port par la variable PORT et ne laisse pas le choix ;
+  # en local on retombe sur 8081, car 8080 est occupe sur la machine de dev.
+  port: ${PORT:${SERVER_PORT:8081}}
 
 app:
   jwt:
@@ -46,4 +49,6 @@ management:
 
 logging:
   level:
-    com.cova.taskmanager: DEBUG
+    # INFO par defaut : un deploiement ne doit pas etre bavard. Le .env local
+    # passe a DEBUG pour le developpement.
+    com.cova.taskmanager: ${APP_LOG_LEVEL:INFO}

@@ -25,6 +25,58 @@ services:
     networks:
       - taskcova
 
+  backend:
+    build:
+      context: ./backend
+    container_name: taskcova-backend
+    restart: unless-stopped
+    depends_on:
+      # Sans cette condition, le backend demarrerait avant que MySQL accepte
+      # les connexions et echouerait sur sa premiere requete.
+      mysql:
+        condition: service_healthy
+    environment:
+      PORT: 8081
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: ${MYSQL_DATABASE}
+      DB_USER: ${MYSQL_USER}
+      DB_PASSWORD: ${MYSQL_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRATION_MS: ${JWT_EXPIRATION_MS}
+      # L'origine publique du frontend doit figurer ici meme si nginx proxifie :
+      # le navigateur envoie un en-tete Origin sur les POST, y compris en
+      # meme-origine, et Spring refuse toute origine absente de la liste.
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS},http://localhost:${WEB_PORT}
+    ports:
+      - "${SERVER_PORT}:8081"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8081/actuator/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+    networks:
+      - taskcova
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: taskcova-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    environment:
+      PORT: 8080
+      # nginx atteint le backend par le reseau interne, pas par l'hote.
+      BACKEND_URL: http://backend:8081
+    ports:
+      # Port distinct de FRONTEND_PORT : celui-ci sert au serveur de
+      # developpement Vite, qui peut tourner en meme temps que la pile.
+      - "${WEB_PORT}:8080"
+    networks:
+      - taskcova
+
 volumes:
   taskcova-mysql-data:
     name: taskcova-mysql-data

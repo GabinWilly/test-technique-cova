@@ -4,9 +4,8 @@ Application de gestion de tâches multi-plateforme : API **Spring Boot**, fronte
 **React**, application mobile **Flutter**, le tout internationalisé (FR / EN).
 
 > Projet réalisé dans le cadre d'un test de recrutement.
-> **État actuel : API, application web et application mobile terminées.**
-> Authentification JWT, CRUD complet, filtres et recherche, le tout en français
-> et en anglais sur les trois couches. La CI/CD est à venir.
+> **Toutes les parties du sujet sont livrées**, bonus compris : API, web,
+> mobile, conteneurisation, CI et déploiement Cloud Run.
 
 ---
 
@@ -24,10 +23,11 @@ Application de gestion de tâches multi-plateforme : API **Spring Boot**, fronte
 
 ```
 .
-├── backend/     API Spring Boot (Maven)
-├── frontend/    Application web React + Vite
-├── mobile/      Application Flutter
-├── docs/        Documentation et captures
+├── backend/            API Spring Boot (Maven)
+├── frontend/           Application web React + Vite
+├── mobile/             Application Flutter
+├── .github/workflows/  CI et déploiement Cloud Run
+├── docs/               Documentation et captures
 └── docker-compose.yml
 ```
 
@@ -57,17 +57,25 @@ cd frontend && npm install && npm run dev
 cd mobile && flutter pub get && flutter run
 ```
 
+### Ou bien, toute la pile en conteneurs
+
+```bash
+docker compose up --build     # frontend sur http://localhost:8082
+```
+
 ### Ports
 
 | Service | Port |
 |---|---|
 | API Spring Boot | `8081` |
-| Frontend Vite | `5174` |
+| Frontend Vite (développement) | `5174` |
+| Frontend nginx (conteneur) | `8082` |
 | MySQL | `3307` |
 
 Ces ports s'écartent des valeurs par défaut (8080 / 5173 / 3306) parce que
 celles-ci étaient déjà occupées sur la machine de développement. Ils se règlent
-dans `.env`.
+dans `.env`. Le frontend conteneurisé a son propre port pour pouvoir tourner
+en même temps que le serveur de développement.
 
 ---
 
@@ -101,9 +109,17 @@ selon l'en-tête `Accept-Language` :
 
 ## Choix techniques
 
-**Proxy plutôt que CORS en développement.** Vite proxifie `/api` et `/actuator`
-vers le backend : le navigateur ne voit qu'une seule origine, ce qui supprime
-toute configuration CORS côté développement.
+**Proxy en développement comme en production.** Vite proxifie `/api` et
+`/actuator` vers le backend, et nginx fait exactement la même chose dans l'image
+de production. Le navigateur ne voit donc jamais qu'une seule origine, et
+**aucune URL d'API n'est injectée au moment du build** : la même image sert en
+préproduction et en production.
+
+Le proxy ne dispense pas pour autant de déclarer l'origine publique du frontend
+dans `CORS_ALLOWED_ORIGINS`. Le navigateur envoie un en-tête `Origin` sur les
+requêtes `POST`, **y compris en même-origine**, et Spring refuse toute origine
+absente de la liste. Le workflow de déploiement la renseigne automatiquement
+après avoir déployé le frontend.
 
 **MySQL conteneurisé.** La base tourne en conteneur avec un `healthcheck` et un
 volume nommé : l'environnement est jetable et reproductible, sans interférer avec
@@ -157,8 +173,24 @@ casse facilement sans s'en apercevoir :
 
 ---
 
+## CI/CD
+
+| Workflow | Déclencheur | Contenu |
+|---|---|---|
+| [`ci.yml`](.github/workflows/ci.yml) | poussée, pull request | tests backend, lint et build frontend, analyse et tests Flutter, construction des images |
+| [`deploy.yml`](.github/workflows/deploy.yml) | `main` | publication sur Artifact Registry, déploiement des deux services sur Cloud Run |
+
+Le déploiement s'authentifie par **fédération d'identité** : aucune clé de compte
+de service n'est stockée dans le dépôt. Il reste inactif tant que la variable
+`GCP_PROJECT_ID` n'est pas renseignée, donc le dépôt se clone et la CI passe sans
+compte GCP.
+
+Détails dans [docs/DEPLOIEMENT.md](docs/DEPLOIEMENT.md).
+
 ## Documentation
 
+- [Déploiement](docs/DEPLOIEMENT.md) — pile Docker locale, images, CI, mise en
+  place de Cloud Run.
 - [Configuration de l'environnement, étape par étape](docs/ENVIRONNEMENT.md) —
   installation, pièges rencontrés, mise en place de l'i18n.
 
