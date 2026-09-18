@@ -71,8 +71,8 @@ Future<bool> confirmDelete(BuildContext context, String taskTitle) async {
           onPressed: () => Navigator.of(dialogContext).pop(false),
           child: Text(l10n.cancel),
         ),
-        FilledButton(
-          style: FilledButton.styleFrom(backgroundColor: amber),
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(backgroundColor: amber),
           onPressed: () => Navigator.of(dialogContext).pop(true),
           child: Text(l10n.delete),
         ),
@@ -99,7 +99,7 @@ Future<void> _showNotice(
       content: Text(message, textAlign: TextAlign.center),
       actionsAlignment: MainAxisAlignment.center,
       actions: [
-        FilledButton(
+        ElevatedButton(
           onPressed: () => Navigator.of(dialogContext).pop(),
           child: Text(l10n.gotIt),
         ),

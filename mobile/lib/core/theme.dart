@@ -122,10 +122,17 @@ ThemeData buildAppTheme() {
       ),
     ),
 
-    filledButtonTheme: FilledButtonThemeData(
-      style: FilledButton.styleFrom(
+    // Le sujet nomme ElevatedButton. Son relief par defaut jurerait avec le
+    // bouton plein de la maquette : l'elevation est donc mise a zero et le
+    // fond force a l'accent, pour obtenir le meme rendu qu'un bouton plein.
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.accent,
         foregroundColor: AppColors.accentInk,
+        disabledBackgroundColor: AppColors.line,
+        disabledForegroundColor: AppColors.muted,
+        elevation: 0,
+        shadowColor: Colors.transparent,
         textStyle: const TextStyle(
           fontFamily: body,
           fontSize: 14,

@@ -158,7 +158,7 @@ class _TaskFormSheetState extends State<TaskFormSheet> {
 
               SizedBox(
                 width: double.infinity,
-                child: FilledButton(
+                child: ElevatedButton(
                   onPressed:
                       _isSaving || _title.text.trim().isEmpty ? null : _submit,
                   child: Text(_isSaving ? l10n.loading : l10n.save),

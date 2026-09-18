@@ -106,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 20),
 
-                  FilledButton(
+                  ElevatedButton(
                     onPressed: _isSubmitting ? null : _submit,
                     child: Text(_isSubmitting ? l10n.loading : l10n.submitLogin),
                   ),
