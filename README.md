@@ -1,5 +1,9 @@
 # Task Manager
 
+**Application en ligne : https://taskcova-frontend-966694161218.europe-west1.run.app**
+
+Un compte de démonstration est disponible : `demo@example.com` / `motdepasse123`.
+
 Application de gestion de tâches multi-plateforme : API **Spring Boot**, frontend
 **React**, application mobile **Flutter**, le tout internationalisé (FR / EN).
 

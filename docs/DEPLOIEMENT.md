@@ -53,7 +53,17 @@ nginx **proxifie `/api`** vers le backend, exactement comme le fait Vite en
 développement. Le navigateur ne voit qu'une seule origine, et l'URL de l'API n'a
 pas besoin d'être injectée au moment du build.
 
-> **Attention, piège.** Le proxy ne supprime pas le besoin de configurer CORS.
+> **Attention, piège nº 1 — amont en HTTPS.** En local, nginx parle en HTTP
+> clair à un hôte nommé `backend` ; sur Cloud Run il parle en HTTPS. Deux
+> directives deviennent alors indispensables, sans quoi nginx répond **502** :
+> `proxy_set_header Host $proxy_host` (Cloud Run route d'après le `Host` : lui
+> renvoyer celui du frontend ferait chercher un service inexistant) et
+> `proxy_ssl_server_name on` (sans SNI, le frontal ne sait pas quel certificat
+> présenter et la poignée de main TLS échoue). Ni l'une ni l'autre ne change
+> quoi que ce soit en local — d'où un défaut resté invisible jusqu'au premier
+> déploiement réel.
+
+> **Attention, piège nº 2.** Le proxy ne supprime pas le besoin de configurer CORS.
 > Le navigateur envoie un en-tête `Origin` sur les requêtes `POST`, **même en
 > même-origine**, et Spring répond alors `403 Invalid CORS request` si cette
 > origine n'est pas déclarée. L'origine publique du frontend doit donc figurer

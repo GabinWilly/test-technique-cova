@@ -28,12 +28,28 @@ server {
         add_header Cache-Control "no-store";
     }
 
-    # Le navigateur ne voit qu'une seule origine, donc aucune question de CORS
-    # en production non plus : c'est nginx qui parle au backend.
+    # Le navigateur ne voit qu'une seule origine : c'est nginx qui parle au
+    # backend.
+    #
+    # Deux directives sont indispensables des que l'amont est en HTTPS, ce qui
+    # est le cas sur Cloud Run :
+    #
+    #  - `Host $proxy_host` et non `$host` : Cloud Run route les requetes
+    #    d'apres l'en-tete Host. Renvoyer celui du frontend ferait chercher un
+    #    service qui n'existe pas a cette adresse. `$proxy_host` vaut l'hote
+    #    issu de proxy_pass, donc celui du backend.
+    #  - `proxy_ssl_server_name on` : sans SNI, le frontal de Cloud Run ne sait
+    #    pas quel certificat presenter, la poignee de main TLS echoue et nginx
+    #    renvoie 502.
+    #
+    # En local, l'amont est en HTTP clair sur un nom de service : ces deux
+    # directives ne changent rien, d'ou un probleme invisible jusqu'au
+    # deploiement.
     location /api/ {
         proxy_pass ${BACKEND_URL};
         proxy_http_version 1.1;
-        proxy_set_header Host $host;
+        proxy_set_header Host $proxy_host;
+        proxy_ssl_server_name on;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
@@ -43,7 +59,8 @@ server {
     location /actuator/ {
         proxy_pass ${BACKEND_URL};
         proxy_http_version 1.1;
-        proxy_set_header Host $host;
+        proxy_set_header Host $proxy_host;
+        proxy_ssl_server_name on;
     }
 
     # Application a page unique : toute route inconnue rend index.html, sinon
