@@ -87,11 +87,61 @@ jobs:
         working-directory: mobile
         run: flutter test
 
+  securite:
+    name: Securite — secrets et configuration
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    env:
+      # Sans cela, Trivy tente de resoudre l'arbre de dependances Maven en
+      # ligne et se fait refouler par un 429 de Maven Central, qui bloque
+      # ensuite l'adresse IP pendant trente minutes.
+      TRIVY_OFFLINE_SCAN: 'true'
+    steps:
+      - uses: actions/checkout@v4
+
+      # Analyse du depot lui-meme : un secret committe par erreur, un Dockerfile
+      # mal configure, un manifeste trop permissif. Ne depend pas des images,
+      # donc tourne en parallele des autres jobs.
+      - name: Trivy — analyse du depot
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          scan-type: fs
+          scanners: secret,misconfig,vuln
+          format: sarif
+          output: trivy-repo.sarif
+          # Le rapport SARIF doit etre produit meme en cas de trouvaille :
+          # le blocage est decide a l'etape suivante.
+          exit-code: '0'
+
+      - name: Publier le rapport
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: trivy-repo.sarif
+          category: trivy-repo
+
+      # Un secret en clair dans le depot est une fuite, pas un avertissement :
+      # ce job echoue, meme si le reste passe.
+      - name: Echouer sur un secret ou une CRITICAL
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          scan-type: fs
+          scanners: secret,misconfig,vuln
+          format: table
+          severity: CRITICAL
+          ignore-unfixed: true
+          exit-code: '1'
+
   docker:
     name: Images Docker
     runs-on: ubuntu-latest
     # Les images ne sont construites que si le code compile et passe les tests.
     needs: [backend, frontend]
+    permissions:
+      contents: read
+      security-events: write
     steps:
       - uses: actions/checkout@v4
 
@@ -99,11 +149,14 @@ jobs:
 
       # Construction sans publication : ce job verifie que les Dockerfile
       # tiennent. La publication appartient au workflow de deploiement.
+      # `load: true` place l'image dans le demon local pour que Trivy la lise.
       - name: Construire l'image du backend
         uses: docker/build-push-action@v6
         with:
           context: ./backend
           push: false
+          load: true
+          tags: taskcova-backend:ci
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -112,5 +165,54 @@ jobs:
         with:
           context: ./frontend
           push: false
+          load: true
+          tags: taskcova-frontend:ci
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+      - name: Trivy — analyse de l'image backend
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: taskcova-backend:ci
+          format: sarif
+          output: trivy-backend.sarif
+          exit-code: '0'
+
+      - name: Trivy — analyse de l'image frontend
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: taskcova-frontend:ci
+          format: sarif
+          output: trivy-frontend.sarif
+          exit-code: '0'
+
+      - name: Publier les rapports
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: '.'
+          category: trivy-images
+
+      # Seules les CRITICAL corrigees en amont font echouer : une CVE sans
+      # correctif disponible n'est pas actionnable et bloquerait tous les
+      # builds jusqu'a ce que l'editeur publie un correctif.
+      - name: Echouer sur une CRITICAL corrigeable — backend
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: taskcova-backend:ci
+          format: table
+          severity: CRITICAL
+          ignore-unfixed: true
+          exit-code: '1'
+
+      - name: Echouer sur une CRITICAL corrigeable — frontend
+        # `always()` pour que le frontend soit analyse meme si le backend a
+        # echoue : sinon un probleme dans l'un masquerait celui de l'autre.
+        if: always()
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: taskcova-frontend:ci
+          format: table
+          severity: CRITICAL
+          ignore-unfixed: true
+          exit-code: '1'

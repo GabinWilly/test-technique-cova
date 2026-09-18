@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../core/theme.dart';
 import '../models/task.dart';
 
 /// Couleurs de statut, partagees par la barre laterale et l'etiquette.
 Color statusColor(TaskStatus status) => switch (status) {
-      TaskStatus.todo => const Color(0xFF64748B),
-      TaskStatus.inProgress => const Color(0xFFB45309),
-      TaskStatus.done => const Color(0xFF15803D),
+      TaskStatus.todo => AppColors.todo,
+      TaskStatus.inProgress => AppColors.doing,
+      TaskStatus.done => AppColors.done,
+    };
+
+/// Fond de l'etiquette. Une teinte pleine plutot qu'une opacite : elle reste
+/// identique a celle du web, ou la couleur est definie en dur.
+Color statusSoftColor(TaskStatus status) => switch (status) {
+      TaskStatus.todo => AppColors.todoSoft,
+      TaskStatus.inProgress => AppColors.doingSoft,
+      TaskStatus.done => AppColors.doneSoft,
     };
 
 String statusLabel(AppLocalizations l10n, TaskStatus status) => switch (status) {
@@ -127,7 +136,7 @@ class _StatusChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.12),
+        color: statusSoftColor(status),
         borderRadius: BorderRadius.circular(999),
       ),
       child: Text(

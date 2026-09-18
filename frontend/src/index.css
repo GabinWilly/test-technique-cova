@@ -1,1 +1,58 @@
 @import "tailwindcss";
+
+/*
+ * Jetons de l'identite visuelle, repris tels quels de la maquette et
+ * identiques a ceux de `AppColors` cote Flutter.
+ *
+ * Tailwind genere les classes correspondantes a partir de ce bloc
+ * (bg-ground, text-ink, bg-accent…).
+ *
+ * TODO: les composants utilisent encore l'echelle Tailwind par defaut
+ * (slate, teal, emerald, amber) pour les couleurs. Seules les polices sont
+ * appliquees pour l'instant ; la bascule des couleurs reste a faire.
+ */
+@theme {
+  /* Neutres : gris froid legerement verdatre, choisi pour accompagner le teal */
+  --color-ground: #eef1f0;
+  --color-surface: #ffffff;
+  --color-surface-2: #f6f9f8;
+  --color-ink: #15201e;
+  --color-muted: #5e6e6b;
+  --color-line: #d9e0de;
+  --color-line-strong: #c1ccc9;
+
+  /* Accent */
+  --color-accent: #0f6466;
+  --color-accent-ink: #ffffff;
+  --color-accent-soft: #dcebea;
+
+  /* Statuts : toujours doubles d'une etiquette texte, jamais la couleur seule */
+  --color-todo: #4e6070;
+  --color-todo-soft: #e7ecef;
+  --color-doing: #9a5209;
+  --color-doing-soft: #faead6;
+  --color-done: #146436;
+  --color-done-soft: #dcefe3;
+
+  /* Un refus metier s'annonce en warn ; danger est reserve aux vraies pannes */
+  --color-warn: #9a5209;
+  --color-warn-soft: #faead6;
+  --color-danger: #a02b24;
+
+  --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-sans: "Public Sans", "Helvetica Neue", Arial, sans-serif;
+}
+
+body {
+  background-color: var(--color-ground);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+}

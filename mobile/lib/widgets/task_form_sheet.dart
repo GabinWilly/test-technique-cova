@@ -123,7 +123,6 @@ class _TaskFormSheetState extends State<TaskFormSheet> {
                 decoration: InputDecoration(
                   labelText: l10n.taskTitle,
                   hintText: l10n.titleHint,
-                  border: const OutlineInputBorder(),
                   errorText: _fieldErrors['title'],
                 ),
                 onChanged: (_) => setState(() {}),
@@ -137,7 +136,6 @@ class _TaskFormSheetState extends State<TaskFormSheet> {
                 decoration: InputDecoration(
                   labelText: l10n.taskDescription,
                   hintText: l10n.descriptionHint,
-                  border: const OutlineInputBorder(),
                   errorText: _fieldErrors['description'],
                 ),
               ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
+import '../core/theme.dart';
 import '../state/auth_state.dart';
 import '../widgets/app_dialogs.dart';
 import '../widgets/language_menu.dart';
@@ -55,7 +56,14 @@ class _LoginScreenState extends State<LoginScreen> {
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: AppBar(actions: const [LanguageMenu()]),
+      // Pas de bandeau teal ici : la maquette montre un ecran d'accueil sobre,
+      // ou seul le selecteur de langue flotte en haut a droite.
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        foregroundColor: AppColors.muted,
+        elevation: 0,
+        actions: const [LanguageMenu()],
+      ),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -81,7 +89,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
                       labelText: l10n.email,
-                      border: const OutlineInputBorder(),
                       errorText: _fieldErrors['email'],
                     ),
                   ),
@@ -94,7 +101,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     onSubmitted: (_) => _submit(),
                     decoration: InputDecoration(
                       labelText: l10n.password,
-                      border: const OutlineInputBorder(),
                       errorText: _fieldErrors['password'],
                     ),
                   ),

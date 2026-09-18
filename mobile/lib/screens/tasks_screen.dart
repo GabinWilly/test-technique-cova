@@ -131,7 +131,6 @@ class _TasksScreenState extends State<TasksScreen> {
                   hintText: l10n.searchHint,
                   prefixIcon: const Icon(Icons.search, size: 20),
                   isDense: true,
-                  border: const OutlineInputBorder(),
                 ),
               ),
             ),

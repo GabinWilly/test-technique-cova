@@ -77,10 +77,38 @@ des fichiers supprimés au déploiement suivant.
 | `backend` | `./mvnw verify` — 21 tests, sur H2, donc **aucun service MySQL à démarrer** |
 | `frontend` | `npm ci`, `oxlint`, `npm run build` (qui enchaîne `tsc -b`) |
 | `mobile` | `flutter analyze` et `flutter test` — 16 tests |
-| `docker` | construit les deux images **sans les publier**, pour vérifier que les Dockerfile tiennent |
+| `securite` | Trivy sur le dépôt : secrets, configuration, dépendances |
+| `docker` | construit les deux images **sans les publier**, puis les analyse avec Trivy |
 
 Le job `docker` dépend de `backend` et `frontend` : inutile de construire une
-image si le code ne passe pas ses tests.
+image si le code ne passe pas ses tests. Le job `securite`, lui, ne dépend de
+rien et tourne en parallèle.
+
+### Analyse de sécurité
+
+Trivy couvre quatre surfaces : les **secrets** committés par erreur, la
+**configuration** des Dockerfile, les **dépendances** déclarées
+(`pom.xml`, `package-lock.json`, `pubspec.lock`) et les **paquets système** des
+images construites.
+
+Les rapports partent au format SARIF vers l'onglet *Security* du dépôt, ce qui
+donne l'historique et l'annotation des pull requests. La règle de blocage est
+volontairement étroite :
+
+> Seules les vulnérabilités **CRITICAL pour lesquelles un correctif existe**
+> font échouer le job (`--ignore-unfixed`). Une CVE sans correctif publié n'est
+> pas actionnable : bloquer dessus rendrait la CI rouge en permanence, jusqu'à
+> ce qu'un tiers publie un correctif. Un secret détecté, en revanche, fait
+> toujours échouer — c'est une fuite, pas un avertissement.
+
+Deux pièges rencontrés en mettant cela en place, tous deux corrigés :
+
+- **Les images de base accusent du retard sur les correctifs Alpine.** Un
+  `apk upgrade --no-cache` dans chaque étape d'exécution les rattrape au moment
+  du build.
+- **Trivy tente de résoudre l'arbre Maven en ligne** et se fait refouler par un
+  `429` de Maven Central, qui bloque ensuite l'adresse IP une demi-heure.
+  `TRIVY_OFFLINE_SCAN` l'en empêche.
 
 ---
 

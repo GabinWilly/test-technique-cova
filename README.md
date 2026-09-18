@@ -177,8 +177,15 @@ casse facilement sans s'en apercevoir :
 
 | Workflow | Déclencheur | Contenu |
 |---|---|---|
-| [`ci.yml`](.github/workflows/ci.yml) | poussée, pull request | tests backend, lint et build frontend, analyse et tests Flutter, construction des images |
+| [`ci.yml`](.github/workflows/ci.yml) | poussée, pull request | tests backend, lint et build frontend, analyse et tests Flutter, analyse Trivy, construction des images |
 | [`deploy.yml`](.github/workflows/deploy.yml) | `main` | publication sur Artifact Registry, déploiement des deux services sur Cloud Run |
+
+**Analyse de sécurité.** Trivy examine les secrets, la configuration des
+Dockerfile, les dépendances déclarées et les paquets des images construites. Les
+rapports remontent dans l'onglet *Security* du dépôt. Seules les vulnérabilités
+**CRITICAL disposant d'un correctif** font échouer la CI : une CVE sans correctif
+n'est pas actionnable et rendrait la CI rouge en permanence. Un secret détecté,
+lui, échoue toujours.
 
 Le déploiement s'authentifie par **fédération d'identité** : aucune clé de compte
 de service n'est stockée dans le dépôt. Il reste inactif tant que la variable

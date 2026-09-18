@@ -16,6 +16,10 @@ RUN ./mvnw -B -q clean package -DskipTests
 # ---------- Image d'execution ----------
 FROM eclipse-temurin:21-jre-alpine AS runtime
 
+# Rattrape les correctifs Alpine publies depuis la derniere image de base, que
+# l'analyse Trivy de la CI signalerait sinon comme critiques.
+RUN apk upgrade --no-cache
+
 # Un utilisateur sans privileges : un processus compromis ne doit pas etre root.
 RUN addgroup -S taskcova && adduser -S -G taskcova taskcova
 

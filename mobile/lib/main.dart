@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import 'core/api_client.dart';
+import 'core/theme.dart';
 import 'screens/login_screen.dart';
 import 'screens/tasks_screen.dart';
 import 'state/auth_state.dart';
@@ -55,10 +56,7 @@ class _App extends StatelessWidget {
         context.read<LocaleState>().syncWithResolved(locale ?? resolved);
         return locale ?? resolved;
       },
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF0F6466)),
-        useMaterial3: true,
-      ),
+      theme: buildAppTheme(),
       home: const _RootGate(),
     );
   }
