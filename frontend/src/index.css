@@ -7,9 +7,8 @@
  * Tailwind genere les classes correspondantes a partir de ce bloc
  * (bg-ground, text-ink, bg-accent…).
  *
- * TODO: les composants utilisent encore l'echelle Tailwind par defaut
- * (slate, teal, emerald, amber) pour les couleurs. Seules les polices sont
- * appliquees pour l'instant ; la bascule des couleurs reste a faire.
+ * Les composants les utilisent tous : aucune couleur de l’echelle Tailwind
+ * par defaut ne subsiste dans src/.
  */
 @theme {
   /* Neutres : gris froid legerement verdatre, choisi pour accompagner le teal */

@@ -21,7 +21,7 @@ export function TaskCard({ task, onEdit, onDelete }: TaskCardProps) {
   }).format(new Date(task.updatedAt))
 
   return (
-    <li className="flex items-start gap-3 rounded-lg border border-slate-200 bg-white p-3.5">
+    <li className="flex items-start gap-3 rounded-lg border border-line bg-surface p-3.5">
       <span
         aria-hidden="true"
         className={`w-0.75 self-stretch rounded-sm ${STATUS_STRIPE[task.status]}`}
@@ -30,15 +30,15 @@ export function TaskCard({ task, onEdit, onDelete }: TaskCardProps) {
       <div className="min-w-0 flex-1">
         <h3
           className={`text-sm font-semibold ${
-            task.status === 'DONE' ? 'text-slate-400 line-through' : 'text-slate-900'
+            task.status === 'DONE' ? 'text-muted line-through' : 'text-ink'
           }`}
         >
           {task.title}
         </h3>
         {task.description ? (
-          <p className="mt-0.5 truncate text-xs text-slate-500">{task.description}</p>
+          <p className="mt-0.5 truncate text-xs text-muted">{task.description}</p>
         ) : null}
-        <p className="mt-1.5 text-[11px] tabular-nums text-slate-400">
+        <p className="mt-1.5 text-[11px] tabular-nums text-muted">
           {t('task.updatedAt', { date: formatted })}
         </p>
       </div>
@@ -49,7 +49,7 @@ export function TaskCard({ task, onEdit, onDelete }: TaskCardProps) {
           type="button"
           onClick={() => onEdit(task)}
           aria-label={`${t('common.edit')} — ${task.title}`}
-          className="grid h-7 w-7 place-items-center rounded-md border border-slate-300 text-slate-500 hover:bg-slate-50 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-700"
+          className="grid h-7 w-7 place-items-center rounded-md border border-line-strong text-muted hover:bg-ground hover:text-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
         >
           <Pencil size={14} aria-hidden="true" />
         </button>
@@ -57,7 +57,7 @@ export function TaskCard({ task, onEdit, onDelete }: TaskCardProps) {
           type="button"
           onClick={() => onDelete(task)}
           aria-label={`${t('common.delete')} — ${task.title}`}
-          className="grid h-7 w-7 place-items-center rounded-md border border-slate-300 text-slate-500 hover:bg-slate-50 hover:text-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-700"
+          className="grid h-7 w-7 place-items-center rounded-md border border-line-strong text-muted hover:bg-ground hover:text-danger focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
         >
           <Trash2 size={14} aria-hidden="true" />
         </button>

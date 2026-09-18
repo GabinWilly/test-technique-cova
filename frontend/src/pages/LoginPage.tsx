@@ -35,17 +35,17 @@ export function LoginPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-slate-50 p-6">
+    <main className="flex min-h-screen items-center justify-center bg-ground p-6">
       <div className="w-full max-w-sm">
         <div className="mb-5 flex justify-end">
           <LanguageSwitcher />
         </div>
 
-        <div className="rounded-xl border border-slate-200 bg-white p-7 shadow-sm">
-          <h1 className="text-xl font-semibold tracking-tight text-slate-900">
+        <div className="rounded-xl border border-line bg-surface p-7 shadow-sm">
+          <h1 className="text-xl font-semibold tracking-tight text-ink">
             {t('common.appName')}
           </h1>
-          <p className="mt-1 text-sm text-slate-500">{t('auth.loginSubtitle')}</p>
+          <p className="mt-1 text-sm text-muted">{t('auth.loginSubtitle')}</p>
 
           <form onSubmit={handleSubmit} noValidate className="mt-6 flex flex-col gap-4">
             <Field id="login-email" label={t('auth.email')} error={fieldErrors.email}>
@@ -78,11 +78,11 @@ export function LoginPage() {
             </Button>
           </form>
 
-          <p className="mt-5 text-center text-sm text-slate-500">
+          <p className="mt-5 text-center text-sm text-muted">
             {t('auth.noAccount')}{' '}
             <Link
               to="/register"
-              className="font-medium text-teal-800 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-700"
+              className="font-medium text-accent hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             >
               {t('auth.register')}
             </Link>

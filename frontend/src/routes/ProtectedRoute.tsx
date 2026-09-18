@@ -25,8 +25,8 @@ export function GuestRoute({ children }: { children: ReactNode }) {
 
 function BootScreen() {
   return (
-    <div className="grid min-h-screen place-items-center bg-slate-50">
-      <span className="h-6 w-6 animate-spin rounded-full border-2 border-slate-300 border-t-teal-800" />
+    <div className="grid min-h-screen place-items-center bg-ground">
+      <span className="h-6 w-6 animate-spin rounded-full border-2 border-line-strong border-t-accent" />
     </div>
   )
 }

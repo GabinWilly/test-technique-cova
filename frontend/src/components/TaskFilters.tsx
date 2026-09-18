@@ -42,7 +42,7 @@ export function TaskFilters({
           <Search
             size={14}
             aria-hidden="true"
-            className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-slate-400"
+            className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-muted"
           />
           <input
             id="task-search"
@@ -51,7 +51,7 @@ export function TaskFilters({
             onChange={(event) => onSearchChange(event.target.value)}
             placeholder={t('task.searchPlaceholder')}
             aria-label={t('common.search')}
-            className="w-full rounded-md border border-slate-300 bg-white py-2 pr-3 pl-9 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-700"
+            className="w-full rounded-md border border-line-strong bg-surface py-2 pr-3 pl-9 text-sm text-ink placeholder:text-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
           />
         </div>
         <Button onClick={onCreate}>
@@ -93,10 +93,10 @@ function FilterTab({
       type="button"
       aria-pressed={active}
       onClick={onClick}
-      className={`rounded-full border px-3 py-1.5 text-xs font-medium whitespace-nowrap transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-700 ${
+      className={`rounded-full border px-3 py-1.5 text-xs font-medium whitespace-nowrap transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
         active
-          ? 'border-slate-900 bg-slate-900 text-white'
-          : 'border-slate-300 bg-white text-slate-600 hover:bg-slate-50'
+          ? 'border-ink bg-ink text-accent-ink'
+          : 'border-line-strong bg-surface text-muted hover:bg-ground'
       }`}
     >
       {label}

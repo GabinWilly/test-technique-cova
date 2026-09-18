@@ -18,14 +18,16 @@ const dialog = Swal.mixin({
   reverseButtons: true,
   customClass: {
     popup: 'rounded-xl',
-    title: 'text-lg font-semibold',
-    htmlContainer: 'text-sm text-slate-500',
+    title: 'font-display text-lg font-semibold text-ink',
+    htmlContainer: 'text-sm text-muted',
     confirmButton:
-      'inline-flex items-center justify-center rounded-md bg-teal-800 px-4 py-2 text-sm font-semibold text-white hover:bg-teal-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-700 focus-visible:ring-offset-2',
+      'inline-flex items-center justify-center rounded-md bg-accent px-4 py-2 text-sm font-semibold text-accent-ink hover:bg-accent/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2',
+    // Le bouton d'une action destructrice est en warn, pas en rouge : c'est une
+    // action volontaire, pas une erreur.
     denyButton:
-      'inline-flex items-center justify-center rounded-md bg-amber-600 px-4 py-2 text-sm font-semibold text-white hover:bg-amber-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2',
+      'inline-flex items-center justify-center rounded-md bg-warn px-4 py-2 text-sm font-semibold text-accent-ink hover:bg-warn/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-warn focus-visible:ring-offset-2',
     cancelButton:
-      'mr-2 inline-flex items-center justify-center rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2',
+      'mr-2 inline-flex items-center justify-center rounded-md border border-line-strong px-4 py-2 text-sm font-semibold text-ink hover:bg-ground focus:outline-none focus-visible:ring-2 focus-visible:ring-line-strong focus-visible:ring-offset-2',
   },
 })
 

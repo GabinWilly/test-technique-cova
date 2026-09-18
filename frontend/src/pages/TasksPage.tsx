@@ -45,8 +45,8 @@ export function TasksPage() {
   /** Liste non filtree, uniquement pour les compteurs d'onglets. */
   const refreshCounts = useCallback(async () => {
     try {
-      const { data } = await api.get<Task[]>('/tasks')
-      setCounts(countBy(data))
+      const all = await api.get<Task[]>('/tasks')
+      setCounts(countBy(all))
     } catch {
       /* les compteurs sont secondaires : leur echec ne doit pas alerter */
     }
@@ -60,13 +60,11 @@ export function TasksPage() {
     const current = ++requestId.current
     setIsLoading(true)
     try {
-      const { data } = await api.get<Task[]>('/tasks', {
-        params: {
-          status: status ?? undefined,
-          search: debouncedSearch.trim() === '' ? undefined : debouncedSearch.trim(),
-        },
+      const found = await api.get<Task[]>('/tasks', {
+        status: status ?? undefined,
+        search: debouncedSearch.trim() === '' ? undefined : debouncedSearch.trim(),
       })
-      if (current === requestId.current) setTasks(data)
+      if (current === requestId.current) setTasks(found)
     } catch (error) {
       if (current === requestId.current) reportError(error)
     } finally {
@@ -141,7 +139,7 @@ export function TasksPage() {
       return (
         <ul className="flex flex-col gap-2" aria-busy="true" aria-label={t('common.loading')}>
           {[0, 1, 2].map((key) => (
-            <li key={key} className="h-21.5 animate-pulse rounded-lg bg-slate-200/70" />
+            <li key={key} className="h-21.5 animate-pulse rounded-lg bg-line" />
           ))}
         </ul>
       )
@@ -171,15 +169,15 @@ export function TasksPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-ground">
       <AppHeader />
 
       <main className="mx-auto max-w-3xl px-4 py-6">
         <div className="mb-4 flex items-baseline justify-between gap-3">
-          <h1 className="text-lg font-semibold tracking-tight text-slate-900">
+          <h1 className="text-lg font-semibold tracking-tight text-ink">
             {t('task.myTasks')}
           </h1>
-          <p className="text-xs text-slate-500">{t('task.count', { count: counts.all })}</p>
+          <p className="text-xs text-muted">{t('task.count', { count: counts.all })}</p>
         </div>
 
         <TaskFilters

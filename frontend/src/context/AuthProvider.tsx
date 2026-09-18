@@ -37,8 +37,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     api
       .get<User>('/auth/me')
-      .then((response) => {
-        if (!cancelled) setUser(response.data)
+      .then((profile) => {
+        if (!cancelled) setUser(profile)
       })
       .catch(() => {
         if (!cancelled) logout()
@@ -60,20 +60,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = useCallback(
     async (email: string, password: string) => {
-      const { data } = await api.post<AuthResponse>('/auth/login', { email, password })
-      applySession(data)
+      const session = await api.post<AuthResponse>('/auth/login', { email, password })
+      applySession(session)
     },
     [applySession],
   )
 
   const register = useCallback(
     async (name: string, email: string, password: string) => {
-      const { data } = await api.post<AuthResponse>('/auth/register', {
+      const session = await api.post<AuthResponse>('/auth/register', {
         name,
         email,
         password,
       })
-      applySession(data)
+      applySession(session)
     },
     [applySession],
   )

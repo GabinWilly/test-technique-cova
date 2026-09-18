@@ -60,7 +60,7 @@ export function TaskFormModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 grid place-items-center bg-slate-900/40 p-4"
+      className="fixed inset-0 z-50 grid place-items-center bg-ink/40 p-4"
       onMouseDown={(event) => {
         if (event.target === event.currentTarget) onClose()
       }}
@@ -69,17 +69,17 @@ export function TaskFormModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby={`${formId}-heading`}
-        className="w-full max-w-md rounded-xl border border-slate-200 bg-white p-5 shadow-xl"
+        className="w-full max-w-md rounded-xl border border-line bg-surface p-5 shadow-xl"
       >
         <div className="mb-4 flex items-center justify-between">
-          <h2 id={`${formId}-heading`} className="text-base font-semibold text-slate-900">
+          <h2 id={`${formId}-heading`} className="text-base font-semibold text-ink">
             {task ? t('task.editTask') : t('task.newTask')}
           </h2>
           <button
             type="button"
             onClick={onClose}
             aria-label={t('common.close')}
-            className="grid h-7 w-7 place-items-center rounded-md border border-slate-300 text-slate-500 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-700"
+            className="grid h-7 w-7 place-items-center rounded-md border border-line-strong text-muted hover:bg-ground focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
           >
             <X size={14} aria-hidden="true" />
           </button>
@@ -122,7 +122,7 @@ export function TaskFormModal({
           </Field>
 
           <fieldset>
-            <legend className="mb-1.5 text-xs font-semibold text-slate-600">
+            <legend className="mb-1.5 text-xs font-semibold text-muted">
               {t('task.status')}
             </legend>
             <div className="flex flex-wrap gap-1.5">
@@ -132,10 +132,10 @@ export function TaskFormModal({
                   type="button"
                   aria-pressed={status === candidate}
                   onClick={() => setStatus(candidate)}
-                  className={`rounded-full border px-3 py-1.5 text-xs font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-700 ${
+                  className={`rounded-full border px-3 py-1.5 text-xs font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
                     status === candidate
-                      ? 'border-slate-900 bg-slate-900 text-white'
-                      : 'border-slate-300 bg-white text-slate-600 hover:bg-slate-50'
+                      ? 'border-ink bg-ink text-accent-ink'
+                      : 'border-line-strong bg-surface text-muted hover:bg-ground'
                   }`}
                 >
                   {t(`task.statuses.${candidate}`)}

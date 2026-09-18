@@ -192,6 +192,64 @@ la configuration CORS du backend.
 > complète, passant par le socket Cloud SQL, sans avoir à reconstruire l'URL
 > morceau par morceau à partir de `DB_HOST` et `DB_PORT`.
 
+### Accès à la base depuis Cloud Run
+
+Sur Cloud Run, l'instance Cloud SQL **n'est pas joignable par IP**. Le backend
+embarque donc le connecteur `mysql-socket-factory-connector-j-8`, qui ouvre un
+socket authentifié vers l'instance. Il est en portée `runtime` : aucun code de
+l'application ne l'importe, le pilote JDBC le charge quand `DATABASE_URL` le
+demande. En local, l'URL reste un hôte et un port, et cette dépendance dort.
+
+`grpc-xds` en est exclu : 11,7 Mo de découverte de services pour un maillage,
+alors que le connecteur fait un simple appel à l'API Cloud SQL Admin. Le jar
+passe de 118 à 104 Mo, ce qui raccourcit d'autant le démarrage à froid.
+
+> Cette dépendance est compilée, packagée et testée, mais **le chemin Cloud SQL
+> lui-même n'a pas été exercé** : il demande une instance réelle. C'est la seule
+> partie du projet qui n'a pas été vérifiée en exécution.
+
+### Déploiement le plus court, sans Artifact Registry
+
+`--source` laisse Cloud Build construire l'image : ni dépôt d'images à créer,
+ni image à pousser. Utile pour un premier déploiement manuel ; la CI, elle,
+passe par Artifact Registry pour pouvoir étiqueter chaque version.
+
+```bash
+gcloud services enable run.googleapis.com sqladmin.googleapis.com cloudbuild.googleapis.com
+
+INSTANCE="VOTRE_PROJET:europe-west1:taskcova-db"
+
+gcloud run deploy taskcova-backend --source ./backend \
+  --region=europe-west1 --allow-unauthenticated \
+  --add-cloudsql-instances="$INSTANCE" \
+  --set-env-vars="DATABASE_URL=jdbc:mysql:///taskmanager?cloudSqlInstance=$INSTANCE&socketFactory=com.google.cloud.sql.mysql.SocketFactory" \
+  --set-env-vars="DB_USER=taskuser,DB_PASSWORD=MOT_DE_PASSE" \
+  --set-env-vars="JWT_SECRET=$(openssl rand -base64 48)"
+
+BACK=$(gcloud run services describe taskcova-backend --region=europe-west1 --format='value(status.url)')
+gcloud run deploy taskcova-frontend --source ./frontend \
+  --region=europe-west1 --allow-unauthenticated \
+  --set-env-vars="BACKEND_URL=$BACK"
+
+# Indispensable : sans cette ligne, le navigateur recoit 403 Invalid CORS request
+FRONT=$(gcloud run services describe taskcova-frontend --region=europe-west1 --format='value(status.url)')
+gcloud run services update taskcova-backend --region=europe-west1 \
+  --update-env-vars="CORS_ALLOWED_ORIGINS=$FRONT"
+```
+
+### Ce que ça coûte
+
+| Poste | Coût |
+|---|---|
+| Cloud Run | proche de zéro — `min-instances 0`, facturé à la requête |
+| Cloud SQL `db-f1-micro` | **~8 €/mois**, facturé en continu |
+| Artifact Registry | négligeable |
+
+Cloud SQL n'a pas de palier gratuit : c'est le seul poste réellement facturé.
+Les crédits offerts d'un nouveau compte le couvrent largement. Pour s'en passer,
+une base MySQL gérée ailleurs fonctionne aussi — il suffit de pointer
+`DATABASE_URL` dessus, et ni Cloud SQL ni le connecteur ne sont alors utiles.
+
 ### Ordre de déploiement
 
 1. Le **backend** part en premier.

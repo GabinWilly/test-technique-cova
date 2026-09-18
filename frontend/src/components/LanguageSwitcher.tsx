@@ -19,7 +19,7 @@ export function LanguageSwitcher() {
     <div
       role="group"
       aria-label={t('common.language')}
-      className="inline-flex rounded-lg border border-slate-200 p-0.5"
+      className="inline-flex rounded-lg border border-line p-0.5"
     >
       {SUPPORTED_LANGUAGES.map((lng) => (
         <button
@@ -29,8 +29,8 @@ export function LanguageSwitcher() {
           aria-pressed={current === lng}
           className={`rounded-md px-2.5 py-1 text-xs font-medium transition-colors ${
             current === lng
-              ? 'bg-slate-900 text-white'
-              : 'text-slate-500 hover:text-slate-900'
+              ? 'bg-ink text-accent-ink'
+              : 'text-muted hover:text-ink'
           }`}
         >
           {LABELS[lng]}

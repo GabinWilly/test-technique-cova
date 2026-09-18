@@ -20,12 +20,12 @@ export function EmptyState({ variant, onCreate, onClearFilters }: EmptyStateProp
   const Icon = isNoResults ? SearchX : ClipboardList
 
   return (
-    <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 px-5 py-10 text-center">
-      <Icon size={30} aria-hidden="true" className="mx-auto mb-3 text-slate-400" strokeWidth={1.5} />
-      <p className="text-sm font-semibold text-slate-900">
+    <div className="rounded-xl border border-dashed border-line-strong bg-ground px-5 py-10 text-center">
+      <Icon size={30} aria-hidden="true" className="mx-auto mb-3 text-muted" strokeWidth={1.5} />
+      <p className="text-sm font-semibold text-ink">
         {isNoResults ? t('task.noResultsTitle') : t('task.emptyTitle')}
       </p>
-      <p className="mx-auto mt-1 max-w-[34ch] text-xs text-slate-500">
+      <p className="mx-auto mt-1 max-w-[34ch] text-xs text-muted">
         {isNoResults ? t('task.noResultsHint') : t('task.emptyHint')}
       </p>
       <div className="mt-4 flex justify-center">
